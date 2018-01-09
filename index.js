@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: '@ecraft/i18n-fetch-translations'
+  name: 'i18n-fetch-translations'
 };

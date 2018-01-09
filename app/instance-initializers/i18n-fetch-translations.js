@@ -1,1 +1,1 @@
-export { default, initialize } from '@ecraft/i18n-fetch-translations/instance-initializers/i18n-fetch-translations';
+export { default, initialize } from 'i18n-fetch-translations/instance-initializers/i18n-fetch-translations';

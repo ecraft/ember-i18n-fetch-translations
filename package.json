@@ -1,12 +1,16 @@
 {
-  "name": "@ecraft/i18n-fetch-translations",
+  "name": "i18n-fetch-translations",
   "version": "0.1.0",
   "description": "Fetch translations for ember-i18n from the server instead of embedding them.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-i18n"
   ],
   "license": "MIT",
-  "author": "eCraft",
+  "author": [
+    "Mikael Riska <mikael.riska@ecraft.com>",
+    "Nicklas Andersson <nicklas.andersson@ecraft.com>"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
