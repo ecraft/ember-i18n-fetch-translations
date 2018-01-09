@@ -1,9 +1,9 @@
 export function initialize(appInstance) {
   const i18n = appInstance.lookup('service:i18n');
   const config = appInstance.resolveRegistration('config:environment');
-  const ewConfig = config['i18n-fetch-translations'];
+  const ewConfig = config['ember-i18n-fetch-translations'];
 
-  const translations = JSON.parse(localStorage.getItem(`i18n-fetch-translations-${ewConfig.namespace}`));
+  const translations = JSON.parse(localStorage.getItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`));
   Object.keys(translations).forEach((locale) => {
     i18n.addTranslations(locale, translations[locale]);
   });

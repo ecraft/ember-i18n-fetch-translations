@@ -5,13 +5,13 @@ import { all, hash } from 'rsvp';
 export function initialize(application) {
   application.deferReadiness();
   const config = application.resolveRegistration('config:environment');
-  const ewConfig = config['i18n-fetch-translations'];
+  const ewConfig = config['ember-i18n-fetch-translations'];
 
   if (ewConfig === undefined || ewConfig.namespace === undefined) {
     Ember.Logger.error(
-      "No namespace set for `i18n-fetch-translations`, don`t know how to access translations endpoint.\n" +
+      "No namespace set for `ember-i18n-fetch-translations`, don`t know how to access translations endpoint.\n" +
       "Please add a configuration block to your Ember configuration file `config/environment.js`.\n" +
-      "ENV['i18n-fetch-translations'] = {\n" +
+      "ENV['ember-i18n-fetch-translations'] = {\n" +
       "  namespace: '<APPLICATION_NAME>/locales/'\n" +
       "};"
     );
@@ -20,9 +20,9 @@ export function initialize(application) {
 
   if (ewConfig === undefined || ewConfig.locales === undefined) {
     Ember.Logger.error(
-      "No locales specified for `i18n-fetch-translations`, don`t know how to access translations.\n" +
+      "No locales specified for `ember-i18n-fetch-translations`, don`t know how to access translations.\n" +
       "Please add a configuration block to your Ember configuration file `config/environment.js`.\n" +
-      "ENV['i18n-fetch-translations'] = {\n" +
+      "ENV['ember-i18n-fetch-translations'] = {\n" +
       "  locales: ['en', 'de']\n" +
       "};"
     );
@@ -45,7 +45,7 @@ export function initialize(application) {
     responses.forEach(({locale, translations}) => {
       locales[locale] = translations;
     });
-    localStorage.setItem(`i18n-fetch-translations-${ewConfig.namespace}`, JSON.stringify(locales));
+    localStorage.setItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`, JSON.stringify(locales));
   })
   .finally(() => {
     application.advanceReadiness();

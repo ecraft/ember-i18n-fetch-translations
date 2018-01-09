@@ -1,13 +1,14 @@
-# i18n-fetch-translations
+# ember-i18n-fetch-translations
 
 This Ember.js addon provides a way to get ember-i18n to load translations from the server instead of having them embedded in the app.
 
 ## Usage
 
-* `ember install i18n-fetch-translations`
+* `ember install ember-i18n-fetch-translations`
 * Make sure you specify a list of the locales you want to support in your Ember configuration file `config/environment.js`.
   ```js
-  ENV['i18n-fetch-translations'] = {
+  ENV['ember-i18n-fetch-translations'] = {
+    namespace: '<APPLICATION_NAME>'
     locales: ['en', 'de']
   };
   ```
@@ -32,13 +33,6 @@ This Ember.js addon provides a way to get ember-i18n to load translations from t
       "receiver-address": "Receiver Address",
       "edit": "Edit"
     }
-  },
-  "models": {
-    "packing-list": {
-      "customer": "Customer",
-      "customer-order": "Customer Order",
-      "sender-name": "Name"
-    }
   }
 }
 ```
@@ -46,7 +40,7 @@ This Ember.js addon provides a way to get ember-i18n to load translations from t
 ## Installation
 
 * `git clone <repository-url>` this repository
-* `cd i18n-fetch-translations`
+* `cd ember-i18n-fetch-translations`
 * `npm install`
 
 ## Running

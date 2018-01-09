@@ -27,7 +27,7 @@ module.exports = function(environment) {
     defaultLocale: 'de'
   };
 
-  ENV['i18n-fetch-translations'] = {
+  ENV['ember-i18n-fetch-translations'] = {
     namespace: '',
     locales: ['en', 'de']
   };
