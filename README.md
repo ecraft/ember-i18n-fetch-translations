@@ -1,13 +1,13 @@
-# ew-fetch-translations
+# i18n-fetch-translations
 
-This Ember.js addon provides a way to get ember-i18n to load translations from uxFactory Server instead of having them embedded in the app.
+This Ember.js addon provides a way to get ember-i18n to load translations from the server instead of having them embedded in the app.
 
 ## Usage
 
-* `ember install @ecraft/ew-fetch-translations`
+* `ember install @ecraft/i18n-fetch-translations`
 * Make sure you specify a list of the locales you want to support in your Ember configuration file `config/environment.js`.
   ```js
-  ENV['ew-fetch-translations'] = {
+  ENV['i18n-fetch-translations'] = {
     locales: ['en', 'de']
   };
   ```
@@ -46,7 +46,7 @@ This Ember.js addon provides a way to get ember-i18n to load translations from u
 ## Installation
 
 * `git clone <repository-url>` this repository
-* `cd ew-fetch-translations`
+* `cd i18n-fetch-translations`
 * `npm install`
 
 ## Running
