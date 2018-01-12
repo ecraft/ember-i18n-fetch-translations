@@ -6,6 +6,7 @@ This Ember.js addon provides a way to get ember-i18n to load translations from t
 
 * `ember install ember-i18n-fetch-translations`
 * Make sure you specify a list of the locales you want to support in your Ember configuration file `config/environment.js`.
+
   ```js
   ENV['ember-i18n-fetch-translations'] = {
     namespace: '<APPLICATION_NAME>'
