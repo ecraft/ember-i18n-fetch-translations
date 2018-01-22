@@ -38,22 +38,32 @@ ENV['ember-i18n-fetch-translations'] = {
 }
 ```
 
-## Installation
+## Development Setup
+
+### Simple Installation
+
+To add the ember-i18n-fetch-translations add-on to an existing project, enter this command from the root of your EmberJS project:
 
 * `ember install ember-i18n-fetch-translations`
 
-## Running
+### Setting Up The Demo
 
+If you'd like to the ember-i18n-fetch-translations for development, follow these steps:
+
+* `git clone` this repository and enter its directory
+* `npm install`
+* `bower install`
 * `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
 
-## Running Tests
+If you now visit the dummy application, you should see it displaying a single translated word.
+
+### Running Tests
 
 * `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
-## Building
+### Building
 
 * `ember build`
 
