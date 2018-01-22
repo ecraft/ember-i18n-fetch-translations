@@ -7,20 +7,20 @@ This Ember.js addon provides a way to get ember-i18n to load translations from t
 * `ember install ember-i18n-fetch-translations`
 * Make sure you specify a list of the locales you want to support in your Ember configuration file `config/environment.js`.
 
-  ```js
-  ENV['ember-i18n-fetch-translations'] = {
-    namespace: '<APPLICATION_NAME>'
+```js
+ENV['ember-i18n-fetch-translations'] = {
+    namespace: '<APPLICATION_NAME>',
     locales: ['en', 'de']
-  };
-  ```
+};
+```
 * Move locales to a folder called `/app/public/locales`, with one subfolder per locale.
-* Convert any existing translation files from ES6 modules to json.
+* Convert any existing translation files from ES6 modules to JSON.
 
 ### Example locale file
 
 `/app/public/locales/en/translations.json`:
 
-```js
+```json
 {
   "global": {
     "type-to-search": "Type to search...",
@@ -38,24 +38,32 @@ This Ember.js addon provides a way to get ember-i18n to load translations from t
 }
 ```
 
-## Installation
+## Development Setup
 
-* `git clone <repository-url>` this repository
-* `cd ember-i18n-fetch-translations`
+### Simple Installation
+
+To add the ember-i18n-fetch-translations add-on to an existing project, enter this command from the root of your EmberJS project:
+
+* `ember install ember-i18n-fetch-translations`
+
+### Setting Up The Demo
+
+If you'd like to the ember-i18n-fetch-translations for development, follow these steps:
+
+* `git clone` this repository and enter its directory
 * `npm install`
-
-## Running
-
+* `bower install`
 * `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
 
-## Running Tests
+If you now visit the dummy application, you should see it displaying a single translated word.
+
+### Running Tests
 
 * `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
-## Building
+### Building
 
 * `ember build`
 
