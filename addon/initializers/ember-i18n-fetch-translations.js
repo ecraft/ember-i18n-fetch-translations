@@ -1,42 +1,54 @@
-import Ember from 'ember';
+import { assert } from '@ember/debug';
 import fetch from 'fetch';
-import { all, hash } from 'rsvp';
+import { all, hash, reject } from 'rsvp';
 
 export function initialize(application) {
   application.deferReadiness();
   const config = application.resolveRegistration('config:environment');
   const ewConfig = config['ember-i18n-fetch-translations'];
 
-  if (ewConfig === undefined || ewConfig.namespace === undefined) {
-    Ember.Logger.error(
-      "No namespace set for `ember-i18n-fetch-translations`, don`t know how to access translations endpoint.\n" +
-      "Please add a configuration block to your Ember configuration file `config/environment.js`.\n" +
-      "ENV['ember-i18n-fetch-translations'] = {\n" +
-      "  namespace: '<APPLICATION_NAME>/locales/'\n" +
-      "};"
-    );
-    return
-  }
+  assert(
+    "No namespace set for `ember-i18n-fetch-translations`, don`t know how to access translations endpoint.\n" +
+    "Please add a configuration block to your Ember configuration file `config/environment.js`.\n" +
+    "ENV['ember-i18n-fetch-translations'] = {\n" +
+    "  namespace: '<APPLICATION_NAME>/locales/'\n" +
+    "};"
+  , ewConfig !== undefined && ewConfig.namespace !== undefined);
 
-  if (ewConfig === undefined || ewConfig.locales === undefined) {
-    Ember.Logger.error(
-      "No locales specified for `ember-i18n-fetch-translations`, don`t know how to access translations.\n" +
-      "Please add a configuration block to your Ember configuration file `config/environment.js`.\n" +
-      "ENV['ember-i18n-fetch-translations'] = {\n" +
-      "  locales: ['en', 'de']\n" +
-      "};"
-    );
-    return
-  }
+
+  assert(
+    "No locales specified for `ember-i18n-fetch-translations`, don`t know how to access translations.\n" +
+    "Please add a configuration block to your Ember configuration file `config/environment.js`.\n" +
+    "ENV['ember-i18n-fetch-translations'] = {\n" +
+    "  locales: ['en', 'de']\n" +
+    "};"
+  , ewConfig !== undefined && ewConfig.locales !== undefined);
 
   const promises = ewConfig.locales.map((locale) => {
-    return fetch(`${ewConfig.namespace}/locales/${locale}/translations.json`)
+    const url = `${ewConfig.namespace}/locales/${locale}/translations.json`;
+    return fetch(url)
     .then((response) => {
-      return hash({
-        locale: locale,
-        translations: response.json()
-      });
-    });
+      if (response.ok) {
+        return hash({
+          locale: locale,
+          translations: response.json()
+        })
+      }
+
+      const existingTranslation = localStorage.getItem(`ember-i18n-fetch-translations-${ewConfig.namespace}.${locale}`);
+      if (existingTranslation) {
+        return hash({
+          locale: locale,
+          translations: existingTranslation
+        });
+      }
+      assert(`Endpoint at ${url} returns 404, are you sure you configured the namespace correctly?`, response.status !== 404);
+      assert('Could not fetch translation and no cached translations found in localStorage.');
+    })
+    .catch((error) => {
+      assert(`Could not fetch translation: ${error}`);
+      reject()
+    })
   });
 
   all(promises)
@@ -46,6 +58,8 @@ export function initialize(application) {
       locales[locale] = translations;
     });
     localStorage.setItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`, JSON.stringify(locales));
+  })
+  .catch(() => {
   })
   .finally(() => {
     application.advanceReadiness();
