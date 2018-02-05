@@ -19,8 +19,3 @@ jobs:
       - run:
           name: Run Tests
           command: yarn test
-      # - deploy:
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
-      #         ember deploy production
-      #       fi
