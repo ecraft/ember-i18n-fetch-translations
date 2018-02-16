@@ -1,4 +1,5 @@
 import { assert } from '@ember/debug';
+import merge from 'lodash/merge';
 import fetch from 'fetch';
 import { all, hash, reject } from 'rsvp';
 
@@ -24,38 +25,50 @@ export function initialize(application) {
     "};"
   , ewConfig !== undefined && ewConfig.locales !== undefined);
 
-  const promises = ewConfig.locales.map((locale) => {
-    const url = `${ewConfig.namespace}/locales/${locale}/translations.json`;
-    return fetch(url)
-    .then((response) => {
-      if (response.ok) {
-        return hash({
-          locale: locale,
-          translations: response.json()
-        })
-      }
+  if (!ewConfig.fileNames || ewConfig.fileNames.length === 0) {
+    ewConfig.fileNames = ['translations.json'];
+  }
 
-      const existingTranslation = localStorage.getItem(`ember-i18n-fetch-translations-${ewConfig.namespace}.${locale}`);
-      if (existingTranslation) {
-        return hash({
-          locale: locale,
-          translations: existingTranslation
-        });
-      }
-      assert(`Endpoint at ${url} returns 404, are you sure you configured the namespace correctly?`, response.status !== 404);
-      assert('Could not fetch translation and no cached translations found in localStorage.');
-    })
-    .catch((error) => {
-      assert(`Could not fetch translation: ${error}`);
-      reject()
-    })
+  let allPromises = [];
+  let promises;
+  ewConfig.fileNames.forEach((fileName) => {
+    promises = ewConfig.locales.map((locale) => {
+      const url = `${ewConfig.namespace}/locales/${locale}/${fileName}`;
+      return fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return hash({
+              locale: locale,
+              translations: response.json()
+            });
+          }
+
+          const existingTranslation = localStorage.getItem(`ember-i18n-fetch-translations-${ewConfig.namespace}.${locale}`);
+          if (existingTranslation) {
+            return hash({
+              locale: locale,
+              translations: existingTranslation
+            });
+          }
+          assert(`Endpoint at ${url} returns 404, are you sure you configured the namespace correctly?`, response.status !== 404);
+          assert('Could not fetch translation and no cached translations found in localStorage.');
+      })
+      .catch((error) => {
+        assert(`Could not fetch translation: ${error}`);
+        reject()
+      })
+    });
+    allPromises = allPromises.concat(promises);
   });
 
-  all(promises)
+  all(allPromises)
   .then((responses) => {
     let locales = {};
     responses.forEach(({locale, translations}) => {
-      locales[locale] = translations;
+      if (!locales[locale]) {
+        locales[locale] = {}
+      }
+      locales[locale] = merge(locales[locale], translations);
     });
     localStorage.setItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`, JSON.stringify(locales));
   })

@@ -10,3 +10,11 @@ test('visiting /ember-i18n-fetch-translations', function(assert) {
     assert.equal(find('div[data-illumination]').text(), 'Blinkenlichts');
   });
 });
+
+test('visiting /ember-i18n-fetch-translations seeing additional translation files merged in', function(assert) {
+  visit('/');
+
+  andThen(function() {
+    assert.equal(find('div[data-recruiterEmailGreeting]').text(), 'Ich haufe your doping gut');
+  });
+});

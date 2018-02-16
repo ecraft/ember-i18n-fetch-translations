@@ -27,9 +27,11 @@ module.exports = function(environment) {
     defaultLocale: 'de'
   };
 
+  // Configure specific filenames
   ENV['ember-i18n-fetch-translations'] = {
     namespace: '',
-    locales: ['en', 'de']
+    locales: ['en', 'de'],
+    fileNames: ['translations.json', 'party_translations.json']
   };
 
   if (environment === 'development') {
