@@ -1,0 +1,21 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8-browsers
+        environment:
+          JOBS: 4
+    working_directory: ~/working_directory
+    steps:
+      - checkout
+      - run:
+          name: Yarn Install
+          command: yarn install --non-interactive
+      - run: echo 'export PATH=~/working_directory/node_modules/.bin:$PATH' >> $BASH_ENV
+      - run:
+          name: Run JS Lint
+          command: yarn run lint:js
+      - run:
+          name: Run Tests
+          command: yarn test
