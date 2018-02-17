@@ -3,7 +3,6 @@ import { run } from '@ember/runloop';
 
 import { initialize } from 'dummy/initializers/ember-i18n-fetch-translations';
 import { module, test } from 'qunit';
-import destroyApp from '../../helpers/destroy-app';
 
 module('Unit | Initializer | ember i18n fetch translations', {
   beforeEach() {
@@ -22,7 +21,6 @@ module('Unit | Initializer | ember i18n fetch translations', {
     const config = this.application.resolveRegistration('config:environment');
     const ewConfig = config['ember-i18n-fetch-translations'];
     localStorage.removeItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`)
-    destroyApp(this.application);
   }
 });
 

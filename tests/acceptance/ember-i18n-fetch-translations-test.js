@@ -1,12 +1,12 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { visit } from '@ember/test-helpers';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | ember i18n fetch translations');
+module('Acceptance | ember i18n fetch translations', function(hooks) {
+    setupApplicationTest(hooks);
 
-test('visiting /ember-i18n-fetch-translations', function(assert) {
-  visit('/');
-
-  andThen(function() {
-    assert.equal(find('div[data-illumination]').text(), 'Blinkenlichts');
-  });
+    test('visiting /ember-i18n-fetch-translations', async function(assert) {
+        await visit('/');
+        assert.equal(this.element.querySelector('div[data-illumination]').textContent, 'Blinkenlichts');
+    });
 });
