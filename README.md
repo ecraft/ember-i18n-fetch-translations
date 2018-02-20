@@ -38,6 +38,25 @@ ENV['ember-i18n-fetch-translations'] = {
 }
 ```
 
+### `fileNames` option
+
+In case you have more than one translation file, you can _merge_ them on top of
+each other. Here's how to configure that:
+
+```js
+ENV['ember-i18n-fetch-translations'] = {
+    namespace: '<APPLICATION_NAME>',
+    locales: ['en', 'de']
+    fileNames: ['factory_default_translations.json', 'translations.json']
+};
+```
+
+This will fetch `factory_default_translations.json` first, for a locale, and
+then amend those with the more specific translations in the file
+`translations.json`.
+
+The default value of `fileNames` is `['translations.json']`.
+
 ## Development Setup
 
 ### Simple Installation

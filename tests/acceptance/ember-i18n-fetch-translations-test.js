@@ -9,4 +9,14 @@ module('Acceptance | ember i18n fetch translations', function(hooks) {
         await visit('/');
         assert.equal(this.element.querySelector('div[data-illumination]').textContent, 'Blinkenlichts');
     });
+
+    test('visiting /ember-i18n-fetch-translations seeing additional translation files merged in', async function(assert) {
+        await visit('/');
+        assert.equal(this.element.querySelector('div[data-recruiterEmailGreeting]').textContent, 'Ich haufe your doping gut');
+    });
+
+    test('visiting /ember-i18n-fetch-translations seeing additional translation files merged over', async function(assert) {
+        await visit('/');
+        assert.equal(this.element.querySelector('div[data-greeting]').textContent, 'Custom Hallo');
+    });
 });
