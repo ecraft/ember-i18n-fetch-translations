@@ -1,5 +1,5 @@
 import { assert } from '@ember/debug';
-import merge from 'lodash/merge';
+import { merge } from 'lodash';
 import fetch from 'fetch';
 import { all, hash, reject } from 'rsvp';
 
