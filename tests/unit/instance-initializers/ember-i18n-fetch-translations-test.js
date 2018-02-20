@@ -2,7 +2,6 @@ import Application from '@ember/application';
 import { run } from '@ember/runloop';
 import { initialize } from 'dummy/instance-initializers/ember-i18n-fetch-translations';
 import { module, test } from 'qunit';
-import destroyApp from '../../helpers/destroy-app';
 
 module('Unit | Instance Initializer | ember i18n fetch translations', {
   beforeEach() {
@@ -28,7 +27,6 @@ module('Unit | Instance Initializer | ember i18n fetch translations', {
     const ewConfig = config['ember-i18n-fetch-translations'];
     localStorage.removeItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`)
     run(this.appInstance, 'destroy');
-    destroyApp(this.application);
   }
 });
 
