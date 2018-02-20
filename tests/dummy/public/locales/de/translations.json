@@ -1,5 +1,6 @@
 {
   "global": {
-    "illumination": "Blinkenlichts"
+    "illumination": "Blinkenlichts",
+    "greeting": "Hallo"
   }
 }
