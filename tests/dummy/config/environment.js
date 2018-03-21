@@ -24,14 +24,17 @@ module.exports = function(environment) {
   };
 
   ENV['i18n'] = {
-    defaultLocale: 'de'
+    defaultLocale: 'da'
   };
 
   // Configure specific filenames
   ENV['ember-i18n-fetch-translations'] = {
     namespace: '',
-    locales: ['en', 'de'],
-    fileNames: ['translations.json', 'party_translations.json']
+    locales: ['en', 'de', 'da'],
+    fileNames: ['translations.json', 'party_translations.json'],
+    directoryMappings: {
+      'da': 'da-DK'
+    }
   };
 
   if (environment === 'development') {

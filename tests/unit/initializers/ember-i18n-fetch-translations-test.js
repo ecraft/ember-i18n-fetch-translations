@@ -26,6 +26,7 @@ module('Unit | Initializer | ember i18n fetch translations', {
 
 test('it stores translations in localStorage', function(assert) {
   initialize(this.application);
+  assert.expect(1);
   const config = this.application.resolveRegistration('config:environment');
   const ewConfig = config['ember-i18n-fetch-translations'];
   assert.ok(localStorage.getItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`));
@@ -40,14 +41,15 @@ test('it warns if endpoint returns 404', function(assert) {
 });
 
 test('it succeeds if no endpoint is available if translations exist in localStorage', function(assert) {
+  assert.expect(1);
   const config = this.application.resolveRegistration('config:environment');
   const ewConfig = config['ember-i18n-fetch-translations'];
   ewConfig.namespace = 'nonexistant';
   localStorage.setItem(`ember-i18n-fetch-translations-${ewConfig.namespace}`, JSON.stringify({
     en: {},
     de: {}
-  }))
-  initialize(this.application)
+  }));
+  initialize(this.application);
   assert.ok(true)
 });
 
