@@ -6,17 +6,20 @@ module('Acceptance | ember i18n fetch translations', function(hooks) {
     setupApplicationTest(hooks);
 
     test('visiting /ember-i18n-fetch-translations', async function(assert) {
+        assert.expect(1);
         await visit('/');
-        assert.equal(this.element.querySelector('div[data-illumination]').textContent, 'Blinkenlichts');
+        assert.equal(this.element.querySelector('div[data-illumination]').textContent, 'Blinkende lygter');
     });
 
     test('visiting /ember-i18n-fetch-translations seeing additional translation files merged in', async function(assert) {
+        assert.expect(1);
         await visit('/');
-        assert.equal(this.element.querySelector('div[data-recruiterEmailGreeting]').textContent, 'Ich haufe your doping gut');
+        assert.equal(this.element.querySelector('div[data-recruiterEmailGreeting]').textContent, 'Jeg håber du har det godt');
     });
 
     test('visiting /ember-i18n-fetch-translations seeing additional translation files merged over', async function(assert) {
+        assert.expect(1);
         await visit('/');
-        assert.equal(this.element.querySelector('div[data-greeting]').textContent, 'Custom Hallo');
+        assert.equal(this.element.querySelector('div[data-greeting]').textContent, 'Næhmen hallo dér!');
     });
 });

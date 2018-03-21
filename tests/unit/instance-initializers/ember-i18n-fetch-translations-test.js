@@ -18,7 +18,7 @@ module('Unit | Instance Initializer | ember i18n fetch translations', {
         en: {},
         de: {},
         fr: {}
-      }))
+      }));
       this.appInstance = this.application.buildInstance();
     });
   },
@@ -30,9 +30,8 @@ module('Unit | Instance Initializer | ember i18n fetch translations', {
   }
 });
 
-// Replace this with your real tests.
 test('it registers translations from localStorage', function(assert) {
-  assert.expect(3);
+  assert.expect(3); // once for each of the three different locales above
   this.application.register('service:i18n', {
     addTranslations: function(language) {
       assert.ok(true, `it registers "${language}"`);

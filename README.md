@@ -48,7 +48,7 @@ each other. Here's how to configure that:
 ```js
 ENV['ember-i18n-fetch-translations'] = {
     namespace: '<APPLICATION_NAME>',
-    locales: ['en', 'de']
+    locales: ['en', 'de'],
     fileNames: ['factory_default_translations.json', 'translations.json']
 };
 ```
@@ -58,6 +58,24 @@ then amend those with the more specific translations in the file
 `translations.json`.
 
 The default value of `fileNames` is `['translations.json']`.
+
+### `directoryMappings` option
+
+In case your content for a general locale sits in an overly-specific file, you
+can instruct this addon to load it into the general locale key:
+
+```js
+ENV['ember-i18n-fetch-translations'] = {
+    namespace: '',
+    locales: ['en', 'de'],
+    directoryMappings: {
+        'de': 'de-DE'
+    }
+};
+```
+
+So, the situation is that the files for the German translation are in a
+directory `de-DE`, but we want the locale information to be loaded into `de`.
 
 ## Development Setup
 

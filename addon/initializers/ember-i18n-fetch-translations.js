@@ -29,11 +29,20 @@ export function initialize(application) {
     ewConfig.fileNames = ['translations.json'];
   }
 
+  if (!ewConfig.directoryMappings) {
+    ewConfig.directoryMappings = {};
+  }
+
   let allPromises = [];
   let promises;
   ewConfig.fileNames.forEach((fileName) => {
     promises = ewConfig.locales.map((locale) => {
-      const url = `${ewConfig.namespace}/locales/${locale}/${fileName}`;
+      let directory = locale;
+      if (ewConfig.directoryMappings.hasOwnProperty(locale)) {
+        directory = ewConfig.directoryMappings[locale];
+      }
+
+      const url = `${ewConfig.namespace}/locales/${directory}/${fileName}`;
       return fetch(url)
         .then((response) => {
           if (response.ok) {
