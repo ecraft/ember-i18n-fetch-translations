@@ -77,6 +77,8 @@ ENV['ember-i18n-fetch-translations'] = {
 So, the situation is that the files for the German translation are in a
 directory `de-DE`, but we want the locale information to be loaded into `de`.
 
+The default value of `directoryMappings` is `{}`.
+
 ## Development Setup
 
 ### Simple Installation
