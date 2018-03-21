@@ -1,6 +1,6 @@
 {
   "name": "ember-i18n-fetch-translations",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Fetch translations for ember-i18n from the server instead of embedding them.",
   "keywords": [
     "ember-addon",
