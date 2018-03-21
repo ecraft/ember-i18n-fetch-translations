@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/ecraft/ember-i18n-fetch-translations/tree/master.svg?style=svg)](https://circleci.com/gh/ecraft/ember-i18n-fetch-translations/tree/master)
+
 # ember-i18n-fetch-translations
 
 This Ember.js addon provides a way to get ember-i18n to load translations from the server instead of having them embedded in the app.
