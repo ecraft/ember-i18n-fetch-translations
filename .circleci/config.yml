@@ -1,21 +1,64 @@
 version: 2
 
+node: &node
+  working_directory: ~/project
+  docker:
+    - image: circleci/node:8-browsers
+      environment:
+        JOBS: 2
+
 jobs:
-  build:
-    docker:
-      - image: circleci/node:8-browsers
-        environment:
-          JOBS: 4
-    working_directory: ~/working_directory
+  install_dependencies:
+    <<: *node
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - "{{ .Environment.CACHE_KEY_PREFIX }}-v1-npm-deps-{{ .Branch }}"
+            - "{{ .Environment.CACHE_KEY_PREFIX }}-v1-npm-deps-"
+      - run:
+          name: Keyscan Github (HACK)
+          command: ssh-keyscan -H github.com > ~/.ssh/known_hosts
       - run:
           name: Yarn Install
-          command: yarn install --non-interactive
-      - run: echo 'export PATH=~/working_directory/node_modules/.bin:$PATH' >> $BASH_ENV
+          command: |
+            echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+            yarn install --non-interactive --no-lockfile
       - run:
-          name: Run JS Lint
-          command: yarn run lint:js
+          name: Set node_modules bin path
+          command: echo 'export PATH=~/project/node_modules/.bin:$PATH' >> $BASH_ENV
       - run:
-          name: Run Tests
-          command: yarn test
+          name: Coffeelint (optional)
+          command: if [ -x `yarn bin`/coffeelint ]; then coffeelint addon tests ; fi
+      - save_cache:
+          key: "{{ .Environment.CACHE_KEY_PREFIX }}-v1-npm-deps-{{ .Branch }}"
+          paths:
+            - ../.cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  tests:
+    <<: *node
+    parallelism: 3
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run tests
+          command: |
+            export PATH=~/project/node_modules/.bin:$PATH
+            node .circleci/ember-try-commands.js > .circleci/scenarios.txt
+            circleci tests split .circleci/scenarios.txt | xargs -t -d '\n' -n 1 -I '{}' ember try:one '{}' --skip-cleanup=true
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - install_dependencies:
+          context: org-global
+      - tests:
+          context: org-global
+          requires:
+            - install_dependencies
